@@ -9,9 +9,10 @@
     "authorView": false
   },
   "dependencies": {
-    "idyll": "^4.0.0",
-    "idyll-d3-component": "^2.0.0",
-    "d3": "^4.0.0"
+    "braces": "^3.0.2",
+    "d3": "^4.0.0",
+    "idyll": "^4.2.0",
+    "idyll-d3-component": "^2.0.0"
   },
   "devDependencies": {
     "gh-pages": "^0.12.0"

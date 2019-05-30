@@ -3,23 +3,17 @@
 [Header
   fullWidth:true
   title:"The Monty Hall Problem"
-  subtitle:"Welcome to Idyll. Open index.idyll to start writing"
-  author:"Your Name Here"
-  authorLink:"https://idyll-lang.org"
-  date:`(new Date()).toDateString()`
+  subtitle:"An Explorable Explanation of the Classic Three Door Problem"
+  author:"Remy Afong, Kevin Chan, and Ben Scharf"
+  ;;authorLink:"https://idyll-lang.org"
+  ;;date:`(new Date()).toDateString()`
   background:"#222222"
   color:"#ffffff"
    /]
 
 ## Introduction
 
-This is an Idyll post. It is generated via
-the file `index.idyll`. To compile this post using
-idyll, run the command `idyll` inside of this directory.
-
-
-Idyll posts are designed to support interaction and
-data-driven graphics.
+The Monty Hall problem is a brain teaser based on the classic game show, Let’s Make a Deal!. It is named after the show’s original host, Monty Hall. In the game, there are three closed doors. Two of these doors have goats behind them, and one of them has a car behind it. If you pick the door behind the car correctly, you win! Halfway through the game, a door will be revealed to have a goat, and you will have an option to switch doors. After, the door with the car will be revealed and you will get to see if you chose wisely!
 
 [var name:"state" value:0 /]
 [CustomD3Component className:"d3-component" state:state /]

@@ -1,11 +1,27 @@
+/*
+    Game CSS
+*/
 
-.d3-component svg {
-  background: #ddd;
-  max-height: 300px;
+.GameBox {
+  border-style: '5px pink dotted';
 }
 
-@media all and (max-width: 1000px) {
-  .d3-component svg {
-    max-height: 200px;
-  }
+.GameBox::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.DoorBox {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.DoorBox img {
+  opacity: 0.5;
+}
+
+.DoorBox img:hover {
+  opacity: 1.0;
 }

@@ -8,7 +8,7 @@ class SwapButton extends Component {
   render() {
     return (
       <div className="ButtonBox">
-        <p className='instructions'>One door has been opened for you. Choose to keep your selection, or choose a new door!</p>
+        <p className='instructions'>One door has been opened for you. You may keep your selection, or choose a different door!</p>
         <button type="button" onClick={this.props.action}>Stay</button>
       </div>
     );

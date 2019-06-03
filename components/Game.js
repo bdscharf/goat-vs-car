@@ -33,19 +33,6 @@ function getRandomInt(min, max) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    // Select car and goat doors
-    // let doors = generateDoors(this.props.doorCount); let sample = [];
-    // sample.push(doors.splice(Math.random() * doors.length, 1));
-    // sample.push(doors.splice(Math.random() * doors.length, 1));
-    // // Set initial state
-    // this.state = {
-    //   firstChoice: null,
-    //   secondChoice: null,
-    //   carDoor: sample[0],
-    //   goatDoor: sample[1],
-    //   gameStep: 'firstChoice',
-    //   firstOpened: null
-    // }
     this.state = this.initialState();
 
     this.handleClick = this.handleClick.bind(this);
@@ -107,7 +94,7 @@ class Game extends React.Component {
         }
         break;
       case 'reveal':
-        console.log('catching clicks here...');
+        // catch clicks that shouldn't change state
         break;
       case 'showEnd':
         break;
@@ -134,12 +121,12 @@ class Game extends React.Component {
     let instructions = getInstructions(this.state.gameStep);
     let openDoor = false;
 
+    // Write to the instructions section
     if (!instructions) {
       instructions = (<SwapButton action={this.handleButtonPress}/>);
     }
     else if (instructions == 'endState') {
       console.log('In endState');
-      // let resetButton = (<button type="button" onClick={this.resetButton()}>Play Again</button>);
       if (this.state.secondChoice == this.state.carDoor) {
         instructions = <EndBox didWin={true} action={this.resetButton}/>
       }
@@ -147,9 +134,12 @@ class Game extends React.Component {
         instructions = <EndBox didWin={false} action={this.resetButton}/>
       }
     }
+
+    // Check if any doors need to be opened
     if (this.state.gameStep == 'stayOrSwitch' && this.state.firstOpened) {
       openDoor = this.state.firstOpened;
     }
+
     return (
       <div className='GameBox'>
         {doors.map((ele, i) => {

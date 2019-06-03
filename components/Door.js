@@ -7,8 +7,34 @@ class Door extends Component {
 
   render() {
     var doorImg = (<img src='static/images/closed.png'/>);
-    if (this.props.doorNum == this.props.gameState.firstChoice) {
+    if (this.props.doorNum == this.props.gameState.firstChoice &&
+        !this.props.gameState.secondChoice) {
       doorImg = (<img src='static/images/selected.png'/>);
+    }
+    else if (this.props.doorNum == this.props.gameState.secondChoice) {
+      doorImg = (<img src='static/images/selected.png'/>);
+    }
+    else if (this.props.isOpen) {
+      doorImg = (<img src='static/images/goat.png'/>);
+    }
+
+    if (this.props.gameState.gameStep == 'reveal') {
+      console.log('Time to reveal. Selection is @ ' + this.props.gameState.secondChoice);
+      console.log('Car is @ ' + this.props.gameState.carDoor);
+      if (this.props.doorNum == this.props.gameState.secondChoice &&
+          this.props.doorNum == this.props.gameState.carDoor) {
+        doorImg = (<img src='static/images/selected-car.png'/>);
+      }
+      else if (this.props.doorNum == this.props.gameState.secondChoice &&
+               this.props.doorNum != this.props.gameState.carDoor) {
+        doorImg = (<img src='static/images/selected-goat.png'/>);
+      }
+      else if (this.props.doorNum == this.props.gameState.carDoor) {
+        doorImg = (<img src='static/images/car.png'/>);
+      }
+      else {
+        doorImg = (<img src='static/images/goat.png'/>);
+      }
     }
 
     return (

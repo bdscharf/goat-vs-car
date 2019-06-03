@@ -5,8 +5,7 @@
   title:"The Monty Hall Problem"
   subtitle:"An Explorable Explanation of the Classic Three Door Problem"
   author:"Remy Afong, Kevin Chan, and Ben Scharf"
-  ;;authorLink:"https://idyll-lang.org"
-  ;;date:`(new Date()).toDateString()`
+  authorLink:"https://github.com/bdscharf/goat-vs-car"
   background:"#222222"
   color:"#ffffff"
    /]

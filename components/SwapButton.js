@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 class SwapButton extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {
     return (
       <div className="ButtonBox">
-        <p>Choose to keep your selection, or choose a new door!</p>
+        <p className='instructions'>One door has been opened for you. Choose to keep your selection, or choose a new door!</p>
         <button type="button" onClick={this.props.action}>Stay</button>
       </div>
     );

@@ -3,7 +3,7 @@
 */
 
 .GameBox {
-  border-style: '5px pink dotted';
+  background-color: white;
 }
 
 .GameBox::after {
@@ -21,16 +21,28 @@
   float: left;
   width: 33.33%;
   padding: 5px;
-}
-
-.DoorBox img {
-  opacity: 1.0;
-}
-
-.DoorBox img:hover {
-  opacity: 1.0;
+  background-color: white;
 }
 
 .ButtonBox {
   text-align: center;
+  margin-top: 10px;
+}
+
+.InstructionBox {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 25px;
+}
+
+.winner {
+  color: green;
+  text-align: center;
+  font-size: 25px;
+}
+
+.loser {
+  color: red;
+  text-align: center;
+  font-size: 25px;
 }

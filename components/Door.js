@@ -19,8 +19,6 @@ class Door extends Component {
     }
 
     if (this.props.gameState.gameStep == 'reveal') {
-      console.log('Time to reveal. Selection is @ ' + this.props.gameState.secondChoice);
-      console.log('Car is @ ' + this.props.gameState.carDoor);
       if (this.props.doorNum == this.props.gameState.secondChoice &&
           this.props.doorNum == this.props.gameState.carDoor) {
         doorImg = (<img src='static/images/selected-car.png'/>);

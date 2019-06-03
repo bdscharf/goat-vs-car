@@ -61,7 +61,6 @@ class Game extends React.Component {
     while (choice == currentlySelected || choice == this.state.carDoor) {
       choice = getRandomInt(1, this.props.doorCount);
     }
-    console.log('chooseOpen has chosen to open door ' + choice);
     return choice;
   }
 
@@ -109,6 +108,16 @@ class Game extends React.Component {
     this.setState((state, props) => {
       return {secondChoice: this.state.firstChoice, gameStep: 'reveal'};
     });
+    if (this.state.firstChoice == this.state.carDoor) {
+      this.props.updateProps({
+        winCount:this.props.winCount+1
+      });
+    }
+    else {
+      this.props.updateProps({
+        lossCount:this.props.lossCount+1
+      });
+    }
   }
 
   resetButton(e) {
@@ -126,7 +135,6 @@ class Game extends React.Component {
       instructions = (<SwapButton action={this.handleButtonPress}/>);
     }
     else if (instructions == 'endState') {
-      console.log('In endState');
       if (this.state.secondChoice == this.state.carDoor) {
         instructions = <EndBox didWin={true} action={this.resetButton}/>
       }

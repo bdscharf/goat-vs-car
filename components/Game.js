@@ -95,6 +95,16 @@ class Game extends React.Component {
           secondChoice: val,
           gameStep: 'reveal',
         });
+        if (val == this.state.carDoor) {
+          this.props.updateProps({
+            winCount:this.props.winCount+1
+          });
+        }
+        else {
+          this.props.updateProps({
+            lossCount:this.props.lossCount+1
+          });
+        }
         break;
       case 'reveal':
         console.log('catching clicks here...');

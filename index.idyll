@@ -15,5 +15,13 @@
 The Monty Hall problem is a brain teaser based on the classic game show, Let’s Make a Deal!. It is named after the show’s original host, Monty Hall. In the game, there are three closed doors. Two of these doors have goats behind them, and one of them has a car behind it. If you pick the door behind the car correctly, you win! Halfway through the game, a door will be revealed to have a goat, and you will have an option to switch doors. After, the door with the car will be revealed and you will get to see if you chose wisely!
 
 [var name:"game1Doors" value:3 /]
+[var name:"wins" value:0 /]
+[var name:"losses" value:0 /]
 
-[Game doorCount:game1Doors /]
+[Game doorCount:game1Doors winCount:wins lossCount:losses /]
+
+Wins: [Display value:wins /]
+Losses: [Display value:losses /]
+[Conditional if:`losses!=0`]
+Percentage successful: [Display value:`wins / (wins+losses)` /]
+[/Conditional]

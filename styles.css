@@ -30,3 +30,7 @@
 .DoorBox img:hover {
   opacity: 1.0;
 }
+
+.ButtonBox {
+  text-align: center;
+}

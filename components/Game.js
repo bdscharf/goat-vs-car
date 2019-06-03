@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Door from './Door';
+import SwapButton from './SwapButton';
 
 function generateDoors(n) {
   let doors = new Array(n);
@@ -10,18 +11,14 @@ function generateDoors(n) {
 }
 
 function getInstructions(gameState) {
-  let text = '';
   switch(gameState) {
     case 'firstChoice':
       return (<p>Choose a door!</p>);
     case 'stayOrSwitch':
-      return (
-        <button type="button">Stay</button>
-      );
+      return false;
     default:
-      return (<br />);
+      return (<p>something might've gone wrong</p>);
   }
-  return text;
 }
 
 function sleep (time) {
@@ -39,26 +36,30 @@ class Game extends React.Component {
     this.state = {
       firstChoice: null,
       carDoor: sample[0],
-      goatDoor: sample[1]
+      goatDoor: sample[1],
+      gameStep: 'firstChoice'
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleButtonPress = this.handleButtonPress.bind(this);
   }
 
+  // Choose which number door to open
+  chooseOpen() {
+
+  }
+
+  // Handle clicks on doors
   handleClick(val) {
-    switch(this.props.gameStep) {
+    switch(this.state.gameStep) {
       case 'firstChoice': // prompt user to stay or switch
         console.log('Choice made for door ' + val);
-        this.props.updateProps({
-          gameStep: 'stayOrSwitch'
-        });
         this.setState({
-          firstChoice: val
+          firstChoice: val,
+          gameStep: 'stayOrSwitch'
         });
         break;
       case 'stayOrSwitch': // time to reveal!
-        this.props.updateProps({
-          gameStep: 'reveal'
-        });
+        console.log("time to reveal");
         break;
       case 'reveal':
         console.log('time to reveal');
@@ -66,18 +67,26 @@ class Game extends React.Component {
       default:
         return 'something went wrong :(';
     }
-    console.log('State is now: ');
-    console.log(JSON.stringify(this.state));
+  }
+
+  // Handle press on stay button
+  handleButtonPress(e) {
+    console.log("button has been pressed");
+    return "hello";
   }
 
   render() {
     let doors = generateDoors(this.props.doorCount);
+    let instructions = getInstructions(this.state.gameStep);
+    if (!instructions) {
+      instructions = (<SwapButton action={this.handleButtonPress}/>);
+    }
     return (
       <div className='GameBox'>
         {doors.map((ele) => {
           return (<Door key={ele} doorNum={ele} gameState={this.state} action={() => this.handleClick(ele)} />);
         })}
-        {getInstructions(this.props.gameStep)}
+        {instructions}
       </div>
     );
   }

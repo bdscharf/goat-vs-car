@@ -9,7 +9,7 @@ class EndBox extends Component {
     if (this.props.didWin) {
       return (
         <div className='InstructionBox'>
-          <p className='winner'>Congratulations, you won</p>
+          <p className='winner'>Congratulations, you won!</p>
           <button type='button' onClick={this.props.action}>Play Again</button>
         </div>);
     }

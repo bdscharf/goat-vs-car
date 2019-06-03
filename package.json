@@ -1,5 +1,9 @@
 {
-  "name": "the-monty-hall-problem",
+  "name": "goat-vs-car",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bdscharf/goat-vs-car.git"
+  },
   "version": "1.0.0",
   "license": "MIT",
   "idyll": {
@@ -9,9 +13,10 @@
     "authorView": false
   },
   "dependencies": {
-    "braces": "^3.0.2",
+    "axios": ">=0.19.0",
+    "braces": ">=3.0.2",
     "d3": "^4.0.0",
-    "idyll": "^4.2.0",
+    "idyll": "^4.3.0",
     "idyll-d3-component": "^2.0.0"
   },
   "devDependencies": {

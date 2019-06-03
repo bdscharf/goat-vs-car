@@ -18,9 +18,7 @@
 
 Wins: [Display value:wins /]
 Losses: [Display value:losses /]
-[Conditional if:`losses!=0`]
 Percentage successful: [Display value:`wins / (wins+losses)` /]
-[/Conditional]
 
 ## Introduction
 

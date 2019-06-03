@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Door from './Door';
 import SwapButton from './SwapButton';
+import EndBox from './EndBox';
 
 function generateDoors(n) {
   let doors = new Array(n);
@@ -29,28 +30,42 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
 class Game extends React.Component {
   constructor(props) {
     super(props);
     // Select car and goat doors
+    // let doors = generateDoors(this.props.doorCount); let sample = [];
+    // sample.push(doors.splice(Math.random() * doors.length, 1));
+    // sample.push(doors.splice(Math.random() * doors.length, 1));
+    // // Set initial state
+    // this.state = {
+    //   firstChoice: null,
+    //   secondChoice: null,
+    //   carDoor: sample[0],
+    //   goatDoor: sample[1],
+    //   gameStep: 'firstChoice',
+    //   firstOpened: null
+    // }
+    this.state = this.initialState();
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleButtonPress = this.handleButtonPress.bind(this);
+    this.resetButton = this.resetButton.bind(this);
+  }
+
+  initialState() {
     let doors = generateDoors(this.props.doorCount); let sample = [];
     sample.push(doors.splice(Math.random() * doors.length, 1));
     sample.push(doors.splice(Math.random() * doors.length, 1));
     // Set initial state
-    this.state = {
+    return {
       firstChoice: null,
       secondChoice: null,
       carDoor: sample[0],
       goatDoor: sample[1],
       gameStep: 'firstChoice',
       firstOpened: null
-    }
-    this.handleClick = this.handleClick.bind(this);
-    this.handleButtonPress = this.handleButtonPress.bind(this);
+    };
   }
 
   // Choose which number door to open, return door number not holding a car
@@ -93,24 +108,33 @@ class Game extends React.Component {
 
   // Handle press on stay button
   handleButtonPress(e) {
+    e.preventDefault();
     this.setState((state, props) => {
       return {secondChoice: this.state.firstChoice, gameStep: 'reveal'};
     });
+  }
+
+  resetButton(e) {
+    e.preventDefault();
+    this.setState(this.initialState());
   }
 
   render() {
     let doors = generateDoors(this.props.doorCount);
     let instructions = getInstructions(this.state.gameStep);
     let openDoor = false;
+
     if (!instructions) {
       instructions = (<SwapButton action={this.handleButtonPress}/>);
     }
     else if (instructions == 'endState') {
+      console.log('In endState');
+      // let resetButton = (<button type="button" onClick={this.resetButton()}>Play Again</button>);
       if (this.state.secondChoice == this.state.carDoor) {
-        instructions = (<p className='winner'>Congratulations, you won!</p>)
+        instructions = <EndBox didWin={true} action={this.resetButton}/>
       }
       else {
-        instructions = (<p className='loser'>Sorry, you did not win.</p>);
+        instructions = <EndBox didWin={false} action={this.resetButton}/>
       }
     }
     if (this.state.gameStep == 'stayOrSwitch' && this.state.firstOpened) {

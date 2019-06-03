@@ -12,6 +12,11 @@
   display: table;
 }
 
+.GameBox p {
+  margin-top: 10px;
+  text-align: center;
+}
+
 .DoorBox {
   float: left;
   width: 33.33%;
@@ -19,7 +24,7 @@
 }
 
 .DoorBox img {
-  opacity: 0.5;
+  opacity: 1.0;
 }
 
 .DoorBox img:hover {

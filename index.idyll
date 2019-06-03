@@ -36,6 +36,79 @@ Surprisingly, the **odds of winning the car aren't 50/50**. When the [action onC
 
 You may be thinking that once there are only 2 doors left, the odds of winning must be 50-50. These choices would be equally likely if you knew nothing about either choice, but the key is that you do. Monty knows where the car is and won't choose to open the door with the car. Thus, by revealing a door with a goat, he's giving you more information. You're left with **a more informed choice rather than a random one**, making the probability of that last door having the car greater than a random 50-50. 
 
+## Simulating More Trials
+
+Still not convinced that the probability of winning is different if you stay with your original door or switch to another door? Run a simulation up to 5000 trials to see how the win percentage converges to 33% if you stay and 67% if you switch doors. 
+
+[data name:"simdata" source:"simulation.csv" /]
+[var name:"trialMax" value:5000 /]
+[var name:"numTrials" value:0 /]
+
+[Conditional if: `numTrials < trialMax`]
+  [button onClick:`numTrials += 200`]Run 200 more Trials![/button]
+[/Conditional]
+
+[Conditional if: `numTrials >= trialMax`]
+  [button onClick:`numTrials = 0`]Reset[/button]
+[/Conditional]
+
+[div]
+Number of Trials Displayed in the Graph: 
+[Display value:numTrials /]
+[/div]
+
+[div]
+  [Inline]
+    [WrapCSS divclass:"stayText" text:"Staying" /]
+  [/Inline]
+  [Inline]
+    [WrapCSS divclass:"switchText" text:"Switching" /]
+  [/Inline]
+[/div]
+
+[IdyllVegaLite data:`simdata.slice(0,numTrials)` spec:`{
+  "title": "Switching vs. Staying Win Percentage",
+  "width" : 600,
+  "height": 400,
+  "layer": [
+  {
+      mark: "line",
+      encoding: {
+        x: {
+          field: "Trials",
+          type: "quantitative",
+          axis: {title: "Trials"}
+        },
+        y: {
+          field: "Switch_Win_Percentage",
+          type: "quantitative",
+          axis: {title: "Win %"},
+          scale: { domain: [0,100] }
+        },
+        "color": {"value": "#f44242"}
+      }
+  },
+  {
+    mark: "line",
+
+    encoding: {
+      x: {
+        field: "Trials",
+        type: "quantitative",
+        axis: {title: "Trials"}
+      },
+      y: {
+        field: "Stay_Win_Percentage",
+        type: "quantitative",
+        axis: {title: "Win %"},
+        scale: { domain: [0,100] }
+      },
+      "color": {"value": "#006699"}
+    }
+  }]
+}` /]
+
+
 ## Generalizing the Game
 
 Traditionally, the game involves 3 doors and a single prize, but the problem can be generalized to any number of doors and prizes. Suppose there are [Equation]d[/Equation] doors, [Equation]p[/Equation] prizes, and Monty opens [Equation]x[/Equation] doors. Because Monty will never open the door you originally chose or open a door with a prize behind it, the number of doors he will open is constrained to
@@ -138,11 +211,13 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     [Equation]x[/Equation]: [TextInput value:x /]
   [/Inline]
   [Inline]
-    [button onClick: `p_i = p/d, s = (d-1)/(d-1-x), p_r = p_i*s`]Go[/button]
+    [Conditional if: `d >= x`]
+      [button onClick: `p_i = p/d, s = (d-1)/(d-1-x), p_r = p_i*s`]Go[/button]
+    [/Conditional]
   [/Inline]
 [/div]
 
-[Conditional if: `d < (x+1+p)`]
+[Conditional if: `d < x`]
   Invalid input. [Equation]x[/Equation] must be [Equation]\leq d-1-p[/Equation].
 [/Conditional]
 
@@ -155,7 +230,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     [Equation]p_i[/Equation]: 
   [/Inline]
   [Inline]
-    [Conditional if: `d >= (x+1+p)`] [Display value: p_i/] [/Conditional]
+    [Conditional if: `d >= x`] [Display value: p_i/] [/Conditional]
   [/Inline]
 [/div]
 
@@ -164,7 +239,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     [Equation]p_r[/Equation]: 
   [/Inline]
   [Inline]
-    [Conditional if: `d >= (x+1+p)`] [Display value: p_r /] [/Conditional]
+    [Conditional if: `d >= x`] [Display value: p_r /] [/Conditional]
   [/Inline]
 [/div]
 
@@ -173,6 +248,8 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     switching enhancement: 
   [/Inline]
   [Inline]
-    [Conditional if: `d >= (x+1+p)`] [Display value: s /] [/Conditional]
+    [Conditional if: `d >= x`] 
+      [Display value: s /] 
+    [/Conditional]
   [/Inline]
 [/div]

@@ -17,7 +17,12 @@
     "braces": ">=3.0.2",
     "d3": "^4.0.0",
     "idyll": "^4.3.0",
-    "idyll-d3-component": "^2.0.0"
+    "idyll-d3-component": "^2.0.0",
+    "idyll-vega-lite": "^1.0.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "vega": "^5.4.0",
+    "vega-lite": "^3.3.0"
   },
   "devDependencies": {
     "gh-pages": "^0.12.0"

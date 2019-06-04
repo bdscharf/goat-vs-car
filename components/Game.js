@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import Door from './Door';
-import SwapButton from './SwapButton';
-import EndBox from './EndBox';
+import React, { Component } from "react";
+import Door from "./Door";
+import SwapButton from "./SwapButton";
+import EndBox from "./EndBox";
 
 function generateDoors(n) {
   let doors = new Array(n);
   for (let i = 0; i < doors.length; i++) {
-    doors[i] = i+1;
+    doors[i] = i + 1;
   }
   return doors;
 }
 
 function getInstructions(gameState) {
-  switch(gameState) {
-    case 'firstChoice':
-      return (<p className='InstructionBox'>Choose a door!</p>);
-    case 'stayOrSwitch':
+  switch (gameState) {
+    case "firstChoice":
+      return <p className="InstructionBox">Choose a door!</p>;
+    case "stayOrSwitch":
       return false;
-    case 'reveal':
-      return 'endState';
+    case "reveal":
+      return "endState";
     default:
-      return (<p>something might've gone wrong</p>);
+      return <p>something might've gone wrong</p>;
   }
 }
 
@@ -41,7 +41,8 @@ class Game extends React.Component {
   }
 
   initialState() {
-    let doors = generateDoors(this.props.doorCount); let sample = [];
+    let doors = generateDoors(this.props.doorCount);
+    let sample = [];
     sample.push(doors.splice(Math.random() * doors.length, 1));
     sample.push(doors.splice(Math.random() * doors.length, 1));
     // Set initial state
@@ -50,7 +51,7 @@ class Game extends React.Component {
       secondChoice: null,
       carDoor: sample[0],
       goatDoor: sample[1],
-      gameStep: 'firstChoice',
+      gameStep: "firstChoice",
       firstOpened: null
     };
   }
@@ -66,39 +67,38 @@ class Game extends React.Component {
 
   // Handle clicks on doors
   handleClick(val) {
-    switch(this.state.gameStep) {
-      case 'firstChoice': // prompt user to stay or switch
+    switch (this.state.gameStep) {
+      case "firstChoice": // prompt user to stay or switch
         this.setState({
           firstChoice: val,
-          gameStep: 'stayOrSwitch',
+          gameStep: "stayOrSwitch"
         });
         this.setState((state, props) => {
-          return {firstOpened: this.chooseOpen(val)};
+          return { firstOpened: this.chooseOpen(val) };
         });
         break;
-      case 'stayOrSwitch': // time to reveal!
+      case "stayOrSwitch": // time to reveal!
         this.setState({
           secondChoice: val,
-          gameStep: 'reveal',
+          gameStep: "reveal"
         });
         if (val == this.state.carDoor) {
           this.props.updateProps({
-            winCount:this.props.winCount+1
+            winCount: this.props.winCount + 1
           });
-        }
-        else {
+        } else {
           this.props.updateProps({
-            lossCount:this.props.lossCount+1
+            lossCount: this.props.lossCount + 1
           });
         }
         break;
-      case 'reveal':
+      case "reveal":
         // catch clicks that shouldn't change state
         break;
-      case 'showEnd':
+      case "showEnd":
         break;
       default:
-        return 'something went wrong :(';
+        return "something went wrong :(";
     }
   }
 
@@ -106,16 +106,15 @@ class Game extends React.Component {
   handleButtonPress(e) {
     e.preventDefault();
     this.setState((state, props) => {
-      return {secondChoice: this.state.firstChoice, gameStep: 'reveal'};
+      return { secondChoice: this.state.firstChoice, gameStep: "reveal" };
     });
     if (this.state.firstChoice == this.state.carDoor) {
       this.props.updateProps({
-        winCount:this.props.winCount+1
+        winCount: this.props.winCount + 1
       });
-    }
-    else {
+    } else {
       this.props.updateProps({
-        lossCount:this.props.lossCount+1
+        lossCount: this.props.lossCount + 1
       });
     }
   }
@@ -132,30 +131,43 @@ class Game extends React.Component {
 
     // Write to the instructions section
     if (!instructions) {
-      instructions = (<SwapButton action={this.handleButtonPress}/>);
-    }
-    else if (instructions == 'endState') {
+      instructions = <SwapButton action={this.handleButtonPress} />;
+    } else if (instructions == "endState") {
       if (this.state.secondChoice == this.state.carDoor) {
-        instructions = <EndBox didWin={true} action={this.resetButton}/>
-      }
-      else {
-        instructions = <EndBox didWin={false} action={this.resetButton}/>
+        instructions = <EndBox didWin={true} action={this.resetButton} />;
+      } else {
+        instructions = <EndBox didWin={false} action={this.resetButton} />;
       }
     }
 
     // Check if any doors need to be opened
-    if (this.state.gameStep == 'stayOrSwitch' && this.state.firstOpened) {
+    if (this.state.gameStep == "stayOrSwitch" && this.state.firstOpened) {
       openDoor = this.state.firstOpened;
     }
 
     return (
-      <div className='GameBox'>
+      <div className="GameBox">
         {doors.map((ele, i) => {
-          if (openDoor == ele || this.state.gameStep == 'showEnd') {
-            return (<Door key={ele} doorNum={ele} gameState={this.state} action={() => this.handleClick(ele)} isOpen={true}/>)
-          }
-          else {
-            return (<Door key={ele} doorNum={ele} gameState={this.state} action={() => this.handleClick(ele)} isOpen={false} />);
+          if (openDoor == ele || this.state.gameStep == "showEnd") {
+            return (
+              <Door
+                key={ele}
+                doorNum={ele}
+                gameState={this.state}
+                action={() => this.handleClick(ele)}
+                isOpen={true}
+              />
+            );
+          } else {
+            return (
+              <Door
+                key={ele}
+                doorNum={ele}
+                gameState={this.state}
+                action={() => this.handleClick(ele)}
+                isOpen={false}
+              />
+            );
           }
         })}
         {instructions}

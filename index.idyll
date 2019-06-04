@@ -6,7 +6,7 @@
   subtitle:"An Explorable Explanation of the Classic Three Door Problem"
   author:"Remy Afong, Kevin Chan, and Ben Scharf"
   authorLink:"https://github.com/bdscharf/goat-vs-car"
-  background:"#222222"
+  background:"#770808"
   color:"#ffffff"
    /]
 
@@ -16,9 +16,11 @@
 
 [Game doorCount:game1Doors winCount:wins lossCount:losses /]
 
-Wins: [Display value:wins /]
-Losses: [Display value:losses /]
-Percentage successful: [Display value:`wins / (wins+losses)` /]
+[div className:"gameStats"]
+Wins: [Display value:wins format:".0f"/]
+Losses: [Display value:losses format:".0f"/]
+Success Percentage: [Display value:`wins / (wins+losses) *100` /]
+[/div]
 
 ## Introduction
 
@@ -45,7 +47,7 @@ Still not convinced that the probability of winning is different if you stay wit
 [var name:"numTrials" value:0 /]
 
 [Conditional if: `numTrials < trialMax`]
-  [button onClick:`numTrials += 200`]Run 200 more Trials![/button]
+  [button onClick:`numTrials += 200`]Run 200 More Trials![/button]
 [/Conditional]
 
 [Conditional if: `numTrials >= trialMax`]

@@ -2,6 +2,19 @@
   Top-level styling
 */
 
+.idyll-action {
+  text-decoration-color:#a51010;
+  text-decoration-style: double;
+  color:#a51010;
+}
+
+.idyll-display {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: normal;
+  padding-left:3px;
+  padding-right:15px;
+}
+
 button {
   background-color: white;
   color: black;
@@ -20,6 +33,12 @@ button:hover {
 /*
   Game CSS
 */
+
+.gameStats {
+  text-align: center;
+  margin-top: 5px;
+  font-weight: bold;
+}
 
 .GameBox {
   margin-top: 10px;

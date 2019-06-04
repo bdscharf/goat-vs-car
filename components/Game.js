@@ -84,19 +84,11 @@ class Game extends React.Component {
         });
         if (val == this.state.carDoor) {
           this.props.updateProps({
-<<<<<<< HEAD
-            switchWinCount:this.props.switchWinCount+1
-=======
-            winCount: this.props.winCount + 1
->>>>>>> 16972724d9b472169bff550e923481ae31f7c1c2
+            switchWinCount: this.props.switchWinCount + 1
           });
         } else {
           this.props.updateProps({
-<<<<<<< HEAD
-            switchLossCount:this.props.switchLossCount+1
-=======
-            lossCount: this.props.lossCount + 1
->>>>>>> 16972724d9b472169bff550e923481ae31f7c1c2
+            switchLossCount: this.props.switchLossCount + 1
           });
         }
         break;
@@ -118,19 +110,11 @@ class Game extends React.Component {
     });
     if (this.state.firstChoice == this.state.carDoor) {
       this.props.updateProps({
-<<<<<<< HEAD
-        stayWinCount:this.props.stayWinCount+1
-=======
-        winCount: this.props.winCount + 1
->>>>>>> 16972724d9b472169bff550e923481ae31f7c1c2
+        stayWinCount: this.props.stayWinCount + 1
       });
     } else {
       this.props.updateProps({
-<<<<<<< HEAD
-        stayLossCount:this.props.stayLossCount+1
-=======
-        lossCount: this.props.lossCount + 1
->>>>>>> 16972724d9b472169bff550e923481ae31f7c1c2
+        stayLossCount: this.props.stayLossCount + 1
       });
     }
   }

@@ -10,21 +10,80 @@
   color:"#ffffff"
    /]
 
-[var name:"game1Doors" value:3 /]
-[var name:"wins" value:0 /]
-[var name:"losses" value:0 /]
-
-[Game doorCount:game1Doors winCount:wins lossCount:losses /]
-
-[div className:"gameStats"]
-Wins: [Display value:wins format:".0f"/]
-Losses: [Display value:losses format:".0f"/]
-Success Percentage: [Display value:`wins / (wins+losses) *100` /]
-[/div]
-
 ## Introduction
 
-The Monty Hall problem is a brain teaser based on the classic game show, *Let’s Make a Deal!*. It is named after the show’s original host, Monty Hall. In the game, there are three closed doors. Two of these doors have goats behind them, and one of them has a car behind it. If you pick the door behind the car correctly, you win! Halfway through the game, a door will be revealed to have a goat, and you will have an option to switch doors. After, the door with the car will be revealed and you will get to see if you chose wisely!
+The Monty Hall problem is a brain teaser based on the classic game show, *Let’s Make a Deal!*. It is named after the show’s original host, Monty Hall. In the game, there are three closed doors. Two of these doors have goats behind them, and one of them has a car behind it. If you pick the door behind the car correctly, you win! Halfway through the game, a door will be revealed to have a goat, and you will have an option to switch doors. After, the door with the car will be revealed and you will get to see if you chose wisely!   
+
+[var name:"game1Doors" value:3 /]
+[var name:"stayWins" value:0 /]
+[var name:"stayLosses" value:0 /]
+[var name:"switchWins" value:0 /]
+[var name:"switchLosses" value:0 /]
+[derived name:"totalWins" value:`stayWins + switchWins` /]
+[derived name:"totalLosses" value:`stayLosses + switchLosses` /]
+
+[Game doorCount:game1Doors stayWinCount:stayWins stayLossCount:stayLosses switchWinCount:switchWins switchLossCount:switchLosses /]
+
+[div className:"gamePies"]
+
+[div className:"gamePie"]
+
+Stay Wins: [Display value:stayWins format:".0f" /]
+Stay Losses: [Display value:stayLosses format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: stayWins,
+    }, {
+      color: '#EAE7D6',
+      value: stayLosses, },
+    ]`
+  /]
+
+Stay Win Percentage: [Display value:`stayWins / (stayWins + stayLosses) * 100` /]%
+
+[/div]
+
+[div className:"gamePie"]
+
+Switch Wins: [Display value:switchWins format:".0f"/]
+Switch Losses: [Display value:switchLosses format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: switchWins,
+    }, {
+      color: '#EAE7D6',
+      value: switchLosses, },
+    ]`
+  /]
+
+Switch Win Percentage: [Display value:`switchWins / (switchWins + switchLosses) * 100` /]%
+
+[/div]
+
+[div className:"gamePie"]
+
+Total Wins: [Display value:totalWins format:".0f"/]
+Total Losses: [Display value:totalLosses format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: totalWins,
+    }, {
+      color: '#EAE7D6',
+      value: totalLosses, },
+    ]`
+  /]
+
+Total Win Percentage: [Display value:`totalWins / (totalWins + totalLosses) * 100` /]%
+
+[/div]
+
+[/div]
 
 ## Understanding the Paradox
 
@@ -232,7 +291,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     [Equation]p_i[/Equation]: 
   [/Inline]
   [Inline]
-    [Conditional if: `d >= x`] [Display value: p_i/] [/Conditional]
+    [Conditional if: `d >= x`] [Display value: p_i format:".4f"/] [/Conditional]
   [/Inline]
 [/div]
 
@@ -241,7 +300,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
     [Equation]p_r[/Equation]: 
   [/Inline]
   [Inline]
-    [Conditional if: `d >= x`] [Display value: p_r /] [/Conditional]
+    [Conditional if: `d >= x`] [Display value: p_r format:".4f"/] [/Conditional]
   [/Inline]
 [/div]
 

@@ -21,6 +21,8 @@
     "idyll-vega-lite": "^1.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-minimal-pie-chart": "^4.1.0",
+    "react-simple-pie-chart": "^0.5.0",
     "vega": "^5.4.0",
     "vega-lite": "^3.3.0"
   },

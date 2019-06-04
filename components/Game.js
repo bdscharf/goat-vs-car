@@ -83,12 +83,12 @@ class Game extends React.Component {
         });
         if (val == this.state.carDoor) {
           this.props.updateProps({
-            winCount:this.props.winCount+1
+            switchWinCount:this.props.switchWinCount+1
           });
         }
         else {
           this.props.updateProps({
-            lossCount:this.props.lossCount+1
+            switchLossCount:this.props.switchLossCount+1
           });
         }
         break;
@@ -110,12 +110,12 @@ class Game extends React.Component {
     });
     if (this.state.firstChoice == this.state.carDoor) {
       this.props.updateProps({
-        winCount:this.props.winCount+1
+        stayWinCount:this.props.stayWinCount+1
       });
     }
     else {
       this.props.updateProps({
-        lossCount:this.props.lossCount+1
+        stayLossCount:this.props.stayLossCount+1
       });
     }
   }

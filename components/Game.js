@@ -83,13 +83,25 @@ class Game extends React.Component {
           gameStep: "reveal"
         });
         if (val == this.state.carDoor) {
-          this.props.updateProps({
-            switchWinCount: this.props.switchWinCount + 1
-          });
+          if (val == this.state.firstChoice) {
+            this.props.updateProps({
+              stayWinCount: this.props.stayWinCount + 1
+            });
+          } else {
+            this.props.updateProps({
+              switchWinCount: this.props.switchWinCount + 1
+            });
+          }
         } else {
-          this.props.updateProps({
-            switchLossCount: this.props.switchLossCount + 1
-          });
+          if (val == this.state.firstChoice) {
+            this.props.updateProps({
+              stayLossCount: this.props.stayLossCount + 1
+            });
+          } else {
+            this.props.updateProps({
+              switchLossCount: this.props.switchLossCount + 1
+            });
+          }
         }
         break;
       case "reveal":

@@ -69,3 +69,12 @@ button:hover {
   text-align: center;
   font-size: 25px;
 }
+
+.switchText {
+  color: #f44242;
+  padding-left: 15px;
+}
+
+.stayText {
+  color: #006699;
+}

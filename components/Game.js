@@ -1,191 +1,183 @@
-import React, { Component } from "react";
-import Door from "./Door";
-import SwapButton from "./SwapButton";
-import EndBox from "./EndBox";
+import React, { Component } from 'react';
 
+import Door from './Door';
+import ActionBox from './ActionBox';
+
+// Generates an array of numbers [1...n]
 function generateDoors(n) {
-  let doors = new Array(n);
-  for (let i = 0; i < doors.length; i++) {
-    doors[i] = i + 1;
+  let doors = [];
+  for (let i = 0; i < n; i++) {
+    doors.push(i+1);
   }
   return doors;
 }
 
-function getInstructions(gameState) {
-  switch (gameState) {
-    case "firstChoice":
-      return <p className="InstructionBox">Choose a door!</p>;
-    case "stayOrSwitch":
-      return false;
-    case "reveal":
-      return "endState";
-    default:
-      return <p>something might've gone wrong</p>;
-  }
-}
-
-function getRandomInt(min, max) {
+// Generate a number in range min-max inclusive on tail
+function randomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-class Game extends React.Component {
+// Flatten an array
+function flattenDeep(arr1) {
+   return arr1.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
+}
+
+// Get an array of size n filled with door numbers
+function generateSample(n, doors, offLimits=false) {
+  if (!offLimits) {
+    var offLimits = []
+  }
+  let sample = []; let indexChoice = null; let doorChoice = null;
+  for (let i = 0; i < n; i++) {
+    indexChoice = randomInt(0, doors.length-1); // pick a random index in doors
+    while (offLimits.includes(doors[indexChoice])) { // check if door at index is already used
+      indexChoice = randomInt(0, doors.length-1);
+    }
+    doorChoice = doors.splice(indexChoice, 1);
+    offLimits.push(doorChoice);
+    sample.push(doorChoice);
+  }
+  sample = flattenDeep(sample);
+  return sample;
+}
+
+class GeneralizedGame extends Component {
   constructor(props) {
     super(props);
     this.state = this.initialState();
 
     this.handleClick = this.handleClick.bind(this);
-    this.handleButtonPress = this.handleButtonPress.bind(this);
-    this.resetButton = this.resetButton.bind(this);
+    this.handlePress = this.handlePress.bind(this);
   }
 
   initialState() {
-    let doors = generateDoors(this.props.doorCount);
-    let sample = [];
-    sample.push(doors.splice(Math.random() * doors.length, 1));
-    sample.push(doors.splice(Math.random() * doors.length, 1));
-    // Set initial state
+    const doors = generateDoors(this.props.doorCount);
+    const prizeDoors = generateSample(this.props.prizeCount, doors);
+
     return {
       firstChoice: null,
       secondChoice: null,
-      carDoor: sample[0],
-      goatDoor: sample[1],
-      gameStep: "firstChoice",
-      firstOpened: null
+      carDoors: prizeDoors,
+      openedDoors: [],
+      gameStep: 1,
+      winner: false
     };
   }
 
-  // Choose which number door to open, return door number not holding a car
-  chooseOpen(currentlySelected) {
-    let choice = getRandomInt(1, this.props.doorCount);
-    while (choice == currentlySelected || choice == this.state.carDoor) {
-      choice = getRandomInt(1, this.props.doorCount);
-    }
-    return choice;
-  }
-
-  // Handle clicks on doors
   handleClick(val) {
     switch (this.state.gameStep) {
-      case "firstChoice": // prompt user to stay or switch
+      case 1:
         this.setState({
           firstChoice: val,
-          gameStep: "stayOrSwitch"
+          gameStep: 2
         });
-        this.setState((state, props) => {
-          return { firstOpened: this.chooseOpen(val) };
-        });
+        this.openDoors();
         break;
-      case "stayOrSwitch": // time to reveal!
+      case 2:
         this.setState({
           secondChoice: val,
-          gameStep: "reveal"
+          gameStep: 3
         });
-        if (val == this.state.carDoor) {
-          if (val == this.state.firstChoice) {
-            this.props.updateProps({
-              stayWinCount: this.props.stayWinCount + 1
-            });
-          } else {
-            this.props.updateProps({
-              switchWinCount: this.props.switchWinCount + 1
-            });
-          }
-        } else {
-          if (val == this.state.firstChoice) {
-            this.props.updateProps({
-              stayLossCount: this.props.stayLossCount + 1
-            });
-          } else {
-            this.props.updateProps({
-              switchLossCount: this.props.switchLossCount + 1
-            });
-          }
+        if (val == this.state.firstChoice) {
+          this.processEnding(val, false); // did not switch
+        }
+        else {
+          this.processEnding(val, true);
         }
         break;
-      case "reveal":
-        // catch clicks that shouldn't change state
-        break;
-      case "showEnd":
+      case 3: // in-place to catch clicks
         break;
       default:
-        return "something went wrong :(";
+        console.error('gameStep variable is invalid.');
     }
   }
 
-  // Handle press on stay button
-  handleButtonPress(e) {
+  handlePress(e) {
     e.preventDefault();
-    this.setState((state, props) => {
-      return { secondChoice: this.state.firstChoice, gameStep: "reveal" };
+    switch(this.state.gameStep) {
+      case 2: // this reflects a press of the 'stay' button
+        this.setState((state, props) => {
+          return {
+            secondChoice: state.firstChoice,
+            gameStep: 3
+          };
+        });
+        this.processEnding(this.state.firstChoice, false); // pressed button = didn't switch
+        break;
+      case 3: // this reflects a press of the 'reset' button
+        this.setState(this.initialState());
+        break;
+      default:
+        console.error('Invalid game state for button press.');
+    }
+  }
+
+  processEnding(choice, didSwitch) {
+    if (this.state.carDoors.includes(choice)) { // winner
+      this.setState({
+        winner: true
+      });
+      if (didSwitch) {
+        this.props.updateProps({
+          switchWinCount: this.props.switchWinCount + 1
+        });
+      }
+      else {
+        this.props.updateProps({
+          stayWinCount: this.props.stayWinCount + 1
+        });
+      }
+    }
+    else {
+      if (didSwitch) {
+        this.props.updateProps({
+          switchLossCount: this.props.switchLossCount + 1
+        });
+      }
+      else {
+        this.props.updateProps({
+          stayLossCount: this.props.stayLossCount + 1
+        });
+      }
+    }
+  }
+
+  openDoors() {
+    this.setState((state, props) =>  {
+      let excluded = [...state.carDoors]; // make copy to avoid pass by reference
+      excluded.push(state.firstChoice);
+      const toOpen = generateSample(props.openCount, generateDoors(props.doorCount), excluded);
+      return { openedDoors:toOpen };
     });
-    if (this.state.firstChoice == this.state.carDoor) {
-      this.props.updateProps({
-        stayWinCount: this.props.stayWinCount + 1
-      });
-    } else {
-      this.props.updateProps({
-        stayLossCount: this.props.stayLossCount + 1
-      });
-    }
-  }
-
-  resetButton(e) {
-    e.preventDefault();
-    this.setState(this.initialState());
   }
 
   render() {
-    let doors = generateDoors(this.props.doorCount);
-    let instructions = getInstructions(this.state.gameStep);
-    let openDoor = false;
-
-    // Write to the instructions section
-    if (!instructions) {
-      instructions = <SwapButton action={this.handleButtonPress} />;
-    } else if (instructions == "endState") {
-      if (this.state.secondChoice == this.state.carDoor) {
-        instructions = <EndBox didWin={true} action={this.resetButton} />;
-      } else {
-        instructions = <EndBox didWin={false} action={this.resetButton} />;
-      }
+    // General validation checks for the actual game
+    if (parseInt(this.props.doorCount) < 2) {
+      return (<p className='loser'>At least 2 doors are required to play.</p>);
+    }
+    else if (parseInt(this.props.doorCount) <= parseInt(this.props.prizeCount)) {
+      return (<p className='loser'>The number of prizes must be less than the number of doors.</p>);
+    }
+    else if (parseInt(this.props.openCount) >= (parseInt(this.props.doorCount) - parseInt(this.props.prizeCount))) {
+      return (<p className='loser'>Monty cannot open {this.props.openCount} doors if {this.props.prizeCount} doors have prizes </p>);
     }
 
-    // Check if any doors need to be opened
-    if (this.state.gameStep == "stayOrSwitch" && this.state.firstOpened) {
-      openDoor = this.state.firstOpened;
-    }
+    const doors = generateDoors(this.props.doorCount);
 
     return (
       <div className="GameBox">
+        <ActionBox gameState={this.state} action={this.handlePress}/>
         {doors.map((ele, i) => {
-          if (openDoor == ele || this.state.gameStep == "showEnd") {
-            return (
-              <Door
-                key={ele}
-                doorNum={ele}
-                gameState={this.state}
-                action={() => this.handleClick(ele)}
-                isOpen={true}
-              />
+          return (
+              <Door key={ele} num={ele} gameState={this.state} action={() => this.handleClick(ele)} />
             );
-          } else {
-            return (
-              <Door
-                key={ele}
-                doorNum={ele}
-                gameState={this.state}
-                action={() => this.handleClick(ele)}
-                isOpen={false}
-              />
-            );
-          }
         })}
-        {instructions}
       </div>
     );
   }
 }
 
-module.exports = Game;
+module.exports = GeneralizedGame;

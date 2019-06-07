@@ -22,7 +22,7 @@ The Monty Hall problem is a brain teaser based on the classic game show, *Let’
 [derived name:"totalWins" value:`stayWins + switchWins` /]
 [derived name:"totalLosses" value:`stayLosses + switchLosses` /]
 
-[Game doorCount:game1Doors stayWinCount:stayWins stayLossCount:stayLosses switchWinCount:switchWins switchLossCount:switchLosses /]
+[Game doorCount:game1Doors prizeCount:1 openCount:1 stayWinCount:stayWins stayLossCount:stayLosses switchWinCount:switchWins switchLossCount:switchLosses /]
 
 [div className:"gamePies"]
 
@@ -313,4 +313,74 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
       [Display value: s /] 
     [/Conditional]
   [/Inline]
+[/div]
+
+[var name:"stay2Wins" value:0 /]
+[var name:"stay2Losses" value:0 /]
+[var name:"switch2Wins" value:0 /]
+[var name:"switch2Losses" value:0 /]
+[derived name:"totalWins2" value:`stay2Wins + switch2Wins` /]
+[derived name:"totalLosses2" value:`stay2Losses + switch2Losses` /]
+
+[Game doorCount:d prizeCount:p openCount:x stayWinCount:stay2Wins stayLossCount:stay2Losses switchWinCount:switch2Wins switchLossCount:switch2Losses /]
+
+[div className:"gamePies"]
+
+[div className:"gamePie"]
+
+Stay Wins: [Display value:stay2Wins format:".0f" /]
+Stay Losses: [Display value:stay2Losses format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: stay2Wins,
+    }, {
+      color: '#EAE7D6',
+      value: stay2Losses, },
+    ]`
+  /]
+
+Stay Win Percentage: [Display value:`stay2Wins / (stay2Wins + stay2Losses) * 100` /]%
+
+[/div]
+
+[div className:"gamePie"]
+
+Switch Wins: [Display value:switch2Wins format:".0f"/]
+Switch Losses: [Display value:switch2Losses format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: switch2Wins,
+    }, {
+      color: '#EAE7D6',
+      value: switch2Losses, },
+    ]`
+  /]
+
+Switch Win Percentage: [Display value:`switch2Wins / (switch2Wins + switch2Losses) * 100` /]%
+
+[/div]
+
+[div className:"gamePie"]
+
+Total Wins: [Display value:totalWins2 format:".0f"/]
+Total Losses: [Display value:totalLosses2 format:".0f"/]
+
+[ReactSimplePieChart
+    slices:`[{
+      color: '#770808',
+      value: totalWins2,
+    }, {
+      color: '#EAE7D6',
+      value: totalLosses2, },
+    ]`
+  /]
+
+Total Win Percentage: [Display value:`totalWins2 / (totalWins2 + totalLosses2) * 100` /]%
+
+[/div]
+
 [/div]

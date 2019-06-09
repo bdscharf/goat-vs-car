@@ -98,9 +98,25 @@ Since there are 3 doors, each has an equal 1/3 probability of containing the car
 
 **Location of the car.** If the car is behind Door 1, Monty will open either Door 2 or Door 3 with an equal 1/2 probability since neither holds the car. If the car is behind Door 2, Monty will open Door 3 so as not to reveal the car. If the car is behind Door 3, Monty will open Door 2 so as not to reveal the car.
 
-**Now you have a decision to make – to stay or switch doors.** To get the probability of a given path, multiply the probabilities on that path. 
+**Understanding path probability.** To get the probability of a path, multiply the probabilities on that path. For example, suppose you follow the top path, i.e. you pick Door 1, the car is actually behind Door 1, Monty opens Door 2, and you decide to stay. The probability of this path is 
+[Equation]\frac{1}{3}(\frac{1}{2})[/Equation].
 
-Looking at all the Stay paths, you will get [Equation]\frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(1) + \frac{1}{3}(1) = [/Equation] 
+**Finally, let's analyze each strategy.**
+[br/]
+*Stay* [br/]
+Looking at all of the Stay paths, see how the path probabilities leading to the Car and Goat differ.
+
+Car: [Equation]\frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(\frac{1}{2}) = \frac{1}{3}[/Equation] 
+
+Goat: [Equation]\frac{1}{3}(1) + \frac{1}{3}(1) = \frac{2}{3}[/Equation] 
+
+*Switch*
+
+Now do the same for all of the Switch paths.
+
+Car: [Equation]\frac{1}{3}(1) + \frac{1}{3}(1) = \frac{2}{3}[/Equation] 
+
+Goat: [Equation]\frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(\frac{1}{2}) = \frac{1}{3}[/Equation] 
 
 [ProbabilityTree /]
 

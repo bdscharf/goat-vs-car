@@ -19,10 +19,12 @@ class ProbabilityTree extends D3Component {
             "link": "1/2",
             "children": [
               {
-                "name": "Car"
+                "name": "Car",
+                "link": "Stay"
               },
               {
-                "name": "Goat"
+                "name": "Goat",
+                "link": "Switch"
               }
             ] 
           },
@@ -31,10 +33,12 @@ class ProbabilityTree extends D3Component {
             "link": "1/2",
             "children": [
               {
-                "name": "Car"
+                "name": "Car",
+                "link": "Stay"
               },
               {
-                "name": "Goat"
+                "name": "Goat",
+                "link": "Switch"
               }
             ] 
           }
@@ -48,10 +52,12 @@ class ProbabilityTree extends D3Component {
             "link": "1",
             "children": [
               {
-                "name": "Car"
+                "name": "Car",
+                "link": "Switch"
               },
               {
-                "name": "Goat"
+                "name": "Goat",
+                "link": "Stay"
               }
             ] 
           }
@@ -65,10 +71,12 @@ class ProbabilityTree extends D3Component {
             "link": "1",
             "children": [
               {
-                "name": "Car"
+                "name": "Car",
+                "link": "Switch"
               },
               {
-                "name": "Goat"
+                "name": "Goat",
+                "link": "Stay"
               }
             ] 
           }
@@ -87,7 +95,7 @@ class ProbabilityTree extends D3Component {
 
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 70, bottom: 20, left: 70},
-    width = 850 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -104,13 +112,6 @@ var i = 0,
     duration = 750,
     root;
 
- // var diagonal = d3.linkHorizontal().x(function (d) {
- //      console.log
- //        return d.y;
- //      }).y(function (d) {
- //        return d.x;
- //      });
-
 // declares a tree layout and assigns the size
 var treemap = d3.tree().size([height, width]);
 
@@ -121,6 +122,7 @@ root.y0 = 0;
 
 // Collapse after the second level
 root.children.forEach(collapse);
+click(root);
 
 update(root);
 
@@ -232,6 +234,7 @@ function update(source) {
     .style('fill-opacity', 1e-6);
 
   // ****************** links section ***************************
+  svg.selectAll('g.link').remove()
 
   // Update the links...
   var link = svg.selectAll('path.link')
@@ -245,13 +248,34 @@ function update(source) {
        return diagonal(o, o)
       });
 
-  // UPDATE
+    // UPDATE
   var linkUpdate = linkEnter.merge(link);
 
   // Transition back to the parent element position
   linkUpdate.transition()
       .duration(duration)
       .attr('d', function(d){ return diagonal(d, d.parent) });
+
+ // Update the link text
+  var linkLabel = svg.selectAll("g.link")
+      .data(links, function (d) {
+      return d.id;
+  });  
+
+
+  var linkLabelEnter = linkLabel.enter().merge(linkLabel)
+      .insert("g")
+      .attr("class", "link")
+      .append("text")
+      .attr("dy", ".35em")
+      .attr("transform", function (d) {
+        console.log(d);
+        return "translate(" + ((d.parent.y + d.y) / 2) + "," + ((d.parent.x + d.x) / 2) + ")";
+  })
+      .attr("text-anchor", "middle")
+      .text(function (d) {
+      return d.data.link;
+  });
 
 
   // Remove any exiting links
@@ -263,41 +287,15 @@ function update(source) {
       })
       .remove();
 
- // Update the link text
-    var linkLabel = svg.selectAll("g.link")
-        .data(links, function (d) {
-        return d.id;
-    });   
+  linkLabel.exit().transition().remove() 
 
-    var linkLabelEnter = linkLabel.enter()
-        .insert("g")
-        .attr("class", "link")
-        .append("text")
-        .attr("dy", ".35em")
-        .attr("text-anchor", "middle")
-        .text(function (d) {
-        return d.data.link;
-    });
-
-    var linkLabelUpdate = linkLabelEnter.merge(linkLabel);
-
-    // Transition link text to their new positions
-
-    linkLabel.transition()
-        .duration(duration)
-        .attr("transform", function (d) {
-          return "translate(" + ((d.parent.y + d.y) / 2) + "," + ((d.parent.x + d.x) / 2) + ")";
-    });
-
-        //Transition exiting link text to the parent's new position.
-    var linkLabelExit = linkLabel.exit().transition()
-        .remove();
 
   // Store the old positions for transition.
   nodes.forEach(function(d){
     d.x0 = d.x;
     d.y0 = d.y;
   });
+  }
 
  // Creates a curved (diagonal) path from parent to the child nodes
   function diagonal(s, d) {
@@ -321,7 +319,6 @@ function update(source) {
       }
     update(d);
   }
-}
 }
 
 }

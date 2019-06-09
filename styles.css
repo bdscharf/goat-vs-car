@@ -3,7 +3,7 @@
 */
 
 .idyll-text-container {
-  width: 1000px;
+  width: 100%;
 }
 
 .idyll-action {
@@ -28,6 +28,11 @@
 .emphasize {
   font-weight: bold,
   color: #a51010;
+}
+
+.fullWidth {
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 button {
@@ -76,6 +81,10 @@ button:hover {
   Game CSS
 */
 
+.pieWrap {
+  text-align: center;
+}
+
 .gamePie {
   width: 150px;
   margin: 10px 20px;
@@ -87,7 +96,12 @@ button:hover {
 .gamePies {
   width: 600px;
   text-align: center;
-  position: relative
+}
+
+.gamePies:after  {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .gameStats {
@@ -103,6 +117,24 @@ button:hover {
   border: 2px solid black;
   border-radius: 15px;
   padding-bottom: 10px;
+}
+
+.treeBox::after {
+  content:"";
+  clear: both;
+  display: table;
+}
+
+.treeText {
+  float: left;
+  width: 50%;
+}
+
+.probTree {
+  padding-top: 50px;
+  padding-left: 25px;
+  float: left;
+  width: 50%;
 }
 
 .GameBox::after {

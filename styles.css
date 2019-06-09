@@ -5,7 +5,13 @@
 .idyll-action {
   text-decoration-color:#a51010;
   text-decoration-style: double;
-  color:#a51010;
+  color: #a51010;
+}
+
+.idyll-action:hover {
+  text-decoration-color:#eda3a3;
+  text-decoration-style: double;
+  color: #eda3a3;
 }
 
 .idyll-display {
@@ -13,6 +19,10 @@
   font-weight: normal;
   padding-left:3px;
   padding-right:15px;
+}
+
+.idyll-scroll-graphic {
+  height: 20px;
 }
 
 button {
@@ -28,6 +38,33 @@ button {
 button:hover {
   background-color: #555555;
   color: white;
+}
+
+/* 
+  Probability Tree CSS
+*/
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 16px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+.link text {
+  font: 16px sans-serif;
+  fill: #CC0000;
+  stroke: #CC0000;
+  stroke-width: 1px;
 }
 
 /*

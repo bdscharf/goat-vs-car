@@ -321,7 +321,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
 [derived name:"totalWins2" value:`stay2Wins + switch2Wins` /]
 [derived name:"totalLosses2" value:`stay2Losses + switch2Losses` /]
 
-[Game doorCount:d prizeCount:p openCount:x stayWinCount:stay2Wins stayLossCount:stay2Losses switchWinCount:switch2Wins switchLossCount:switch2Losses /]
+[Game doorCount:d prizeCount:p openCount:x stayWinCount:stay2Wins stayLossCount:stay2Losses switchWinCount:switch2Wins switchLossCount:switch2Losses smallDoor:true /]
 
 [div className:"gamePies"]
 

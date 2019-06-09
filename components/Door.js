@@ -51,11 +51,20 @@ class Door extends Component {
 
     // make decisions about which door to choose here
 
-    return (
-      <div className="DoorBox" onClick={this.props.action}>
-        {door}
-      </div>
-    );
+    if (this.props.smallDoor) {
+      return (
+        <div className="SmallDoorBox" onClick={this.props.action}>
+          {door}
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="DoorBox" onClick={this.props.action}>
+          {door}
+        </div>
+      );
+    }
   }
 }
 

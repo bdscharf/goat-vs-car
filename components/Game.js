@@ -171,9 +171,16 @@ class GeneralizedGame extends Component {
       <div className="GameBox">
         <ActionBox gameState={this.state} action={this.handlePress}/>
         {doors.map((ele, i) => {
-          return (
+          if (this.props.smallDoor) {
+            return (
+              <Door key={ele} num={ele} gameState={this.state} smallDoor={true} action={() => this.handleClick(ele)} />
+            );
+          }
+          else {
+            return (
               <Door key={ele} num={ele} gameState={this.state} action={() => this.handleClick(ele)} />
             );
+          }
         })}
       </div>
     );

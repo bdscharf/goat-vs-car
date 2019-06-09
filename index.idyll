@@ -10,6 +10,8 @@
   color:"#ffffff"
    /]
 
+[FullWidth]
+
 ## Introduction
 
 The Monty Hall problem is a brain teaser based on the classic game show, *Let’s Make a Deal!*. It is named after the show’s original host, Monty Hall. In the game, there are three closed doors. Two of these doors have goats behind them, and one of them has a car behind it. If you pick the door behind the car correctly, you win! Halfway through the game, a door will be revealed to have a goat, and you will have an option to switch doors. After, the door with the car will be revealed and you will get to see if you chose wisely!   
@@ -89,6 +91,8 @@ Total Win Percentage: [Display value:`totalWins / (totalWins + totalLosses) * 10
 
 [/div]
 
+[div className:"treeBox"]
+[div className:"treeText"]
 ## Understanding the Paradox
 
 Surprisingly, the **odds of winning the car aren't 50-50**. Let's walk through the following scenario together to understand why. **Click on the nodes to follow along!**
@@ -102,7 +106,12 @@ Since there are 3 doors, each has an equal 1/3 probability of containing the car
 
 Looking at all the Stay paths, you will get [Equation]\frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(1) + \frac{1}{3}(1) = [/Equation] 
 
+[/div]
+
+[div className:"probTree"]
 [ProbabilityTree /]
+[/div]
+[/div]
 
 ## Why Information Matters
 
@@ -335,6 +344,7 @@ Input values for the number of doors [Equation]d[/Equation], the number of prize
 
 [Game doorCount:d prizeCount:p openCount:x stayWinCount:stay2Wins stayLossCount:stay2Losses switchWinCount:switch2Wins switchLossCount:switch2Losses smallDoor:true /]
 
+[div className: "pieWrap"]
 [div className:"gamePies"]
 
 [div className:"gamePie"]
@@ -395,3 +405,7 @@ Total Win Percentage: [Display value:`totalWins2 / (totalWins2 + totalLosses2) *
 [/div]
 
 [/div]
+
+[/div]
+
+[/FullWidth]

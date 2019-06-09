@@ -2,6 +2,10 @@
   Top-level styling
 */
 
+.idyll-text-container {
+  width: 1000px;
+}
+
 .idyll-action {
   text-decoration-color:#a51010;
   text-decoration-style: double;
@@ -19,6 +23,11 @@
   font-weight: normal;
   padding-left:3px;
   padding-right:15px;
+}
+
+.emphasize {
+  font-weight: bold,
+  color: #a51010;
 }
 
 button {
@@ -58,8 +67,8 @@ button:hover {
 
 .link text {
   font: 16px sans-serif;
-  fill: #CC0000;
-  stroke: #CC0000;
+  fill: #a51010;
+  stroke: #a51010;
   stroke-width: 1px;
 }
 

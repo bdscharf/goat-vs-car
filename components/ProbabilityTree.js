@@ -96,7 +96,7 @@ class ProbabilityTree extends D3Component {
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 70, bottom: 20, left: 70},
     width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 550 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'

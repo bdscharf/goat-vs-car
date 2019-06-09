@@ -91,19 +91,18 @@ Total Win Percentage: [Display value:`totalWins / (totalWins + totalLosses) * 10
 
 ## Understanding the Paradox
 
-Surprisingly, the **odds of winning the car aren't 50-50**. Let's walk through the following scenario together to understand why. Click on the nodes to follow along!
+Surprisingly, the **odds of winning the car aren't 50-50**. Let's walk through the following scenario together to understand why. **Click on the nodes to follow along!**
 
-Suppose you choose Door 1.
+**Suppose you choose Door 1.**
+Since there are 3 doors, each has an equal 1/3 probability of containing the car. 
+
+**Location of the car.** If the car is behind Door 1, Monty will open either Door 2 or Door 3 with an equal 1/2 probability since neither holds the car. If the car is behind Door 2, Monty will open Door 3 so as not to reveal the car. If the car is behind Door 3, Monty will open Door 2 so as not to reveal the car.
+
+**Now you have a decision to make – to stay or switch doors.** To get the probability of a given path, multiply the probabilities on that path. 
+
+Looking at all the Stay paths, you will get [Equation]\frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(\frac{1}{2}) + \frac{1}{3}(1) + \frac{1}{3}(1) = [/Equation] 
 
 [ProbabilityTree /]
-
-
-
-[var name:"chooseText" value:"0" /]
-
-When the [action onClick:`chooseText = '1'`]game starts[/action], you choose 1 of 3 doors, and the odds of winning with your original choice is 1/3. Together, the other two doors have a combined 2/3 odds of holding the car. When Monty [action onClick:`chooseText = '2'`]opens one of those doors[/action], it doesn't change the odds. So now, the last door has the entire 2/3 odds of holding the car. Thus, if you choose to [action onClick:`chooseText = '3'`]stay with your original door[/action], you have a **1/3 chance of winning**. If you choose to [action onClick:`chooseText = '4'`]switch[/action], you have a **2/3 chance of winning**. 
-
-[img src: `"static/images/" + chooseText + ".png"` /]
 
 ## Why Information Matters
 
@@ -181,12 +180,17 @@ Number of Trials Displayed in the Graph:
   }]
 }` /]
 
-
 ## Generalizing the Game
 
-Still not convinced? Understandably, you may still be skeptical of why the probabilities 
+Understandably, you may still be skeptical about why switching doors can double your chances of winning. Let's go through a larger scenario to see why switching is always in your favor. Imagine that instead of 3 doors, there are 100 doors. There is still only 1 prize, but this time, Monty opens 98 doors.
 
-Traditionally, the game involves 3 doors and a single prize, but the problem can be generalized to any number of doors and prizes. Suppose there are [Equation]d[/Equation] doors, [Equation]p[/Equation] prizes, and Monty opens [Equation]x[/Equation] doors. Because Monty will never open the door you originally chose or open a door with a prize behind it, the number of doors he will open is constrained to
+In other words, you originally pick 1 door, which has a 1/100 chance of containing the car. Monty looks at the 99 other doors and opens 98 with goats. In essence, he is filtering the other doors and leaving you with the best door out of the 99. 
+
+So now, do stick with your random original door, or the door that was filtered out from 99 other doors? Hopefully you can see that a filtered choice is better than a random one. Now let's see how much switching helps you, depending on the scenario.
+
+## Implementing the Generalization
+
+As described, the problem can be generalized to any number of doors and prizes. Suppose there are [Equation]d[/Equation] doors, [Equation]p[/Equation] prizes, and Monty opens [Equation]x[/Equation] doors. Because Monty will never open the door you originally chose or open a door with a prize behind it, the number of doors he will open is constrained to
 
 [Equation display:true]
   x \leq d-1-p
@@ -269,7 +273,7 @@ and [Equation]p_i[/Equation] and [Equation]p_r[/Equation] are [Equation]1/3[/Equ
 
 ## Try It Out Yourself!
 
-Input values for the number of doors [Equation]d[/Equation], the number of prizes [Equation]p[/Equation], and the number of doors Monty will open [Equation]x[/Equation]. See how the benefit of switching changes as you vary these values.
+Input values for the number of doors [Equation]d[/Equation], the number of prizes [Equation]p[/Equation], and the number of doors Monty will open [Equation]x[/Equation]. See how the benefit of switching changes as you vary these values, then play the game!
 
 [var name:"d" value:3 /]
 [var name:"p" value:1 /]

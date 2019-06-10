@@ -87,16 +87,16 @@ class ProbabilityTree extends D3Component {
 
   var levelData = 
   {
-    "first": "Your Door",
-    "second": "Car Location",
-    "third": "Monty Opens",
-    "fourth": "Outcome"
+    "first": "1. Your Door",
+    "second": "2. Car Location",
+    "third": "3. Monty Opens",
+    "fourth": "4. Outcome"
   }
 
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 70, bottom: 20, left: 70},
-    width = 800 - margin.left - margin.right,
-    height = 550 - margin.top - margin.bottom;
+    width = 550 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
@@ -145,7 +145,7 @@ function update(source) {
       links = treeData.descendants().slice(1);
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d){ d.y = d.depth * 180});
+  nodes.forEach(function(d){ d.y = d.depth * 130});
 
   // Showing the labels for the level of depths.
   let _ = require('underscore')
@@ -156,7 +156,7 @@ function update(source) {
   levels.data(depthHash)
     .enter().append("g")
     .attr("class", "level")
-    .attr("transform", function(d) { return "translate(" + (d*185-50) + "," + 0 + ")"; })
+    .attr("transform", function(d) { return "translate(" + (d*130-50) + "," + 0 + ")"; })
     .append("text")
     .text(function(d){
       if (d == 0) {return levelData.first}
@@ -184,7 +184,7 @@ function update(source) {
       .attr('class', 'node')
       .attr('r', 1e-6)
       .style("fill", function(d) {
-          return d._children ? "lightsteelblue" : "#fff";
+          return d._children ? "#FFF2CD" : "#fff";
       });
 
   // Add labels for the nodes
@@ -212,7 +212,7 @@ function update(source) {
   nodeUpdate.select('circle.node')
     .attr('r', 10)
     .style("fill", function(d) {
-        return d._children ? "lightsteelblue" : "#fff";
+        return d._children ? "#FFF2CD" : "#fff";
     })
     .attr('cursor', 'pointer');
 

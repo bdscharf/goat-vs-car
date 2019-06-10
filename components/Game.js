@@ -155,14 +155,20 @@ class GeneralizedGame extends Component {
 
   render() {
     // General validation checks for the actual game
-    if (parseInt(this.props.doorCount) < 2) {
+    if (!parseInt(this.props.doorCount) || !parseInt(this.props.prizeCount) || !parseInt(this.props.openCount)) {
+      return (<p className='loser'>Please enter values for d, p, and x.</p>);
+    }
+    else if (parseInt(this.props.doorCount) <= 1) {
       return (<p className='loser'>At least 2 doors are required to play.</p>);
     }
     else if (parseInt(this.props.doorCount) <= parseInt(this.props.prizeCount)) {
       return (<p className='loser'>The number of prizes must be less than the number of doors.</p>);
     }
+    else if (parseInt(this.props.openCount) > (parseInt(this.props.doorCount))) {
+      return (<p className='loser'>Monty cannot open {this.props.openCount} doors if there are only {this.props.doorCount} doors.</p>);
+    }
     else if (parseInt(this.props.openCount) >= (parseInt(this.props.doorCount) - parseInt(this.props.prizeCount))) {
-      return (<p className='loser'>Monty cannot open {this.props.openCount} doors if {this.props.prizeCount} doors have prizes </p>);
+      return (<p className='loser'>Monty cannot open {this.props.openCount} doors if {this.props.prizeCount} doors have prizes.</p>);
     }
 
     const doors = generateDoors(this.props.doorCount);

@@ -2,6 +2,7 @@
   Top-level styling
 */
 
+
 .idyll-text-container {
   width: 100%;
 }
@@ -9,12 +10,14 @@
 .idyll-action {
   text-decoration-color:#a51010;
   text-decoration-style: double;
+  font-weight: bold;
   color: #a51010;
 }
 
 .idyll-action:hover {
   text-decoration-color:#eda3a3;
   text-decoration-style: double;
+  font-weight: bold;
   color: #eda3a3;
 }
 
@@ -25,14 +28,9 @@
   padding-right:15px;
 }
 
-.emphasize {
-  font-weight: bold,
-  color: #a51010;
-}
-
 .fullWidth {
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 button {
@@ -56,7 +54,7 @@ button:hover {
 
 .node circle {
   fill: #fff;
-  stroke: steelblue;
+  stroke: #FED966;
   stroke-width: 3px;
 }
 
@@ -94,14 +92,16 @@ button:hover {
 }
 
 .gamePies {
-  width: 600px;
+  width: 65%;
   text-align: center;
+  float: right;
 }
 
 .gamePies:after  {
   content: "";
   clear: both;
   display: table;
+  float: right;
 }
 
 .gameStats {
@@ -117,6 +117,14 @@ button:hover {
   border: 2px solid black;
   border-radius: 15px;
   padding-bottom: 10px;
+  float: left;
+  width: 35%;
+}
+
+.demoBox::after {
+  content:"";
+  clear: both;
+  display: table;
 }
 
 .treeBox::after {
@@ -128,13 +136,37 @@ button:hover {
 .treeText {
   float: left;
   width: 50%;
+  font-size: 12.5px;
 }
 
 .probTree {
   padding-top: 50px;
-  padding-left: 25px;
-  float: left;
+  padding-left: 15px;
+  float: right;
   width: 50%;
+}
+
+.trialBox:after {
+  content: "";
+  clear: both;
+  display: table;
+  text-align: center;
+}
+
+.trialButtons {
+  padding-top: 50px;
+  padding-right: 10px;
+  float: left;
+  width: 25%;
+}
+
+.trialLegend {
+  float: right;
+  padding-top: -300px;
+}
+
+.trialText {
+  color: "black";
 }
 
 .GameBox::after {
@@ -173,6 +205,11 @@ button:hover {
   font-size: 25px;
 }
 
+.probs {
+  float: left;
+  width: 35%;
+}
+
 .winner {
   color: green;
   text-align: center;
@@ -187,9 +224,16 @@ button:hover {
 
 .switchText {
   color: #f44242;
-  padding-left: 15px;
+  display: inline-block;
 }
 
 .stayText {
-  color: #006699;
+  color: #2099ea;
+  display: inline-block;
+}
+
+.emphasize {
+  color: #a51010;
+  font-weight: bold;
+  display: inline-block;
 }

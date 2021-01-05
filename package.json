@@ -13,7 +13,7 @@
     "authorView": false
   },
   "dependencies": {
-    "axios": ">=0.19.0",
+    "axios": ">=0.21.1",
     "braces": ">=3.0.2",
     "d3": "^4.0.0",
     "idyll": "^4.3.2",
